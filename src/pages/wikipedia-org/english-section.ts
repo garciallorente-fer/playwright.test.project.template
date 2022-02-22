@@ -3,6 +3,7 @@ import type { Page } from '@playwright/test';
 import { BasePage } from '../base';
 import { Button } from '@components';
 import { wikipediaEnURL } from '@data';
+// import { ApiInterception } from '@utils';
 
 
 export class EnglishSectionWikiPage extends BasePage {
@@ -17,6 +18,7 @@ export class EnglishSectionWikiPage extends BasePage {
 
   public async waitForComponentsState(): Promise<void> {
     await Promise.all([
+      // ApiInterception.waitForRequest(this.page, { url: this.url, status: 304 }),
       this.logoLink.waitForComponentState()
     ]);
   }

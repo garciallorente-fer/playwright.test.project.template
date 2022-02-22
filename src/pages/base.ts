@@ -1,7 +1,6 @@
 import type { Page } from '@playwright/test';
 
 import { expect } from '@playwright/test';
-import { environment } from '../../playwright.config';
 
 
 export class BasePage {
@@ -27,7 +26,7 @@ export class BasePage {
 
 
   public async waitToMatchSnapshot(snapshotName: string): Promise<void> {
-    expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}-${environment}.png`);
+    expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
   }
 
 

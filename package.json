@@ -1,0 +1,25 @@
+{
+    "name": "playwright.test.project.template",
+    "version": "1.0.0",
+    "description": "Playwright Test Project Template",
+    "author": "Fernando Garcia Llorente",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/garciallorente-fer/playwright.test.project.template"
+    },
+    "scripts": {
+        "install": "set PLAYWRIGHT_BROWSERS_PATH=0&& playwright install",
+        "test": "set PLAYWRIGHT_BROWSERS_PATH=0&& playwright test",
+        "eslint": "eslint ."
+    },
+    "dependencies": {
+        "@playwright/test": "^1.19.1"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.12.0",
+        "@typescript-eslint/parser": "^5.12.0",
+        "eslint": "^8.9.0",
+        "playwright-cli": "^0.180.0",
+        "typescript": "^4.5.5"
+    }
+}

@@ -21,18 +21,22 @@ export class BasePage {
 
   public async waitForURL(): Promise<void> {
     const urlRegExp = this.url.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
-    await expect(this.page).toHaveURL(new RegExp(urlRegExp));
+    await expect.soft(this.page).toHaveURL(new RegExp(urlRegExp));
   }
 
 
+  public async takeScreenshot(path?: string): Promise<void> {
+    await this.page.screenshot({ fullPage: true, path: path, animations: 'disabled' });
+  }
+
   public async waitToMatchSnapshot(snapshotName: string): Promise<void> {
-    expect(await this.page.screenshot({ fullPage: true })).toMatchSnapshot(`${snapshotName}.png`);
+    expect.soft(await this.takeScreenshot()).toMatchSnapshot(`${snapshotName}.png`, { maxDiffPixels: 30 });
   }
 
 
   public async closePage(): Promise<void> {
     await this.page.close();
-    expect(this.page.isClosed()).toBeTruthy();
+    expect.soft(this.page.isClosed()).toBeTruthy();
   }
 
 

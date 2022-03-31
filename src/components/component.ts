@@ -9,10 +9,13 @@ export class Component {
   protected readonly locator: Locator;
   protected readonly selector: string;
 
-  constructor(page: Page, selector: string, options?: { hasText: string | RegExp }) {
+  constructor(page: Page, selector: string, options?: { hasText?: string | RegExp, frameLocator?: string }) {
     this.page = page;
     this.locator = page.locator(selector, options);
     this.selector = selector;
+    if(options?.frameLocator){
+      this.locator = page.frameLocator(options.frameLocator).locator(selector, options);
+    }
   }
 
 
@@ -37,7 +40,7 @@ export class Component {
         expect(this.locator, errorMessage).toHaveClass(/hidden/)
       ]);
     } else {
-      await Promise.any([
+      await Promise.all([
         expect(this.locator, errorMessage).toBeVisible(),
         expect(this.locator, errorMessage).not.toHaveClass(/hidden/)
       ]);
@@ -52,7 +55,7 @@ export class Component {
         expect(this.locator, errorMessage).toHaveClass(/disabled/)
       ]);
     } else {
-      await Promise.any([
+      await Promise.all([
         expect(this.locator, errorMessage).toBeEnabled(),
         expect(this.locator, errorMessage).not.toHaveClass(/disabled/)
       ]);
@@ -74,6 +77,15 @@ export class Component {
       await expect(this.locator, errorMessage).toBeEditable();
     } else {
       await expect(this.locator, errorMessage).not.toBeEditable();
+    }
+  }
+
+  public async waitForWarningState(warning: boolean): Promise<void> {
+    const errorMessage = 'Unexpected WARNING=' + !warning;
+    if (warning) {
+      await expect(this.locator, errorMessage).toHaveClass(/warning/);
+    } else {
+      await expect(this.locator, errorMessage).not.toHaveClass(/warning/);
     }
   }
 
